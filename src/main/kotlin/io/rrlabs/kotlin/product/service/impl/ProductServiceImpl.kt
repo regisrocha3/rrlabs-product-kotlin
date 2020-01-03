@@ -1,17 +1,16 @@
 package io.rrlabs.kotlin.product.service.impl
 
-import io.rrlabs.kotlin.product.controller.ProductRepository
+import io.rrlabs.kotlin.product.repository.ProductRepository
 import io.rrlabs.kotlin.product.domain.Product
 import io.rrlabs.kotlin.product.service.ProductService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.math.BigDecimal
 import java.util.*
 
 /**
  * @author Regis Rocha
  */
-@Service
+@Service("ProductService")
 class ProductServiceImpl : ProductService {
 
     @Autowired
