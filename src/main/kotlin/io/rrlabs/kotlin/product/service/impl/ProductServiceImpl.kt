@@ -17,6 +17,8 @@ class ProductServiceImpl : ProductService {
     @Autowired
     private lateinit var productRepository: ProductRepository
 
+    override fun findAll(): List<Product> = this.productRepository.findAll()
+
     override fun findById(id: String): Optional<Product> = this.productRepository.findById(Product(UUID.fromString(id)));
 
     override fun create(product: Product): Product = this.productRepository.save(product)

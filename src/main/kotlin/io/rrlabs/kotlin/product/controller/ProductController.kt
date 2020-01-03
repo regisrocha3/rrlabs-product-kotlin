@@ -1,7 +1,6 @@
 package io.rrlabs.kotlin.product.controller
 
 import io.rrlabs.kotlin.product.domain.Product
-import io.rrlabs.kotlin.product.exception.NotFoundException
 import io.rrlabs.kotlin.product.service.ProductService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -10,8 +9,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.lang.RuntimeException
-import java.math.BigDecimal
 import java.util.*
 
 /**
@@ -27,10 +24,22 @@ class ProductController {
     @Autowired
     private lateinit var productService : ProductService;
 
+    @ApiOperation("API para consulta do produto", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_VALUE, position = 4)
+    @GetMapping(value = ["/"])
+    fun findAll() : ResponseEntity<List<Product>> {
+        val products: Optional<List<Product>> = Optional.of(this.productService.findAll())
+
+        if (products.isEmpty) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(products.get());
+    }
+
     @ApiOperation("API para criação de produto", httpMethod = "POST", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, position = 1)
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun create(@RequestBody product : Product) : ResponseEntity<Product> {
-        product.id = UUID.randomUUID()
+        product.setId(UUID.randomUUID())
         return ResponseEntity.ok(this.productService.create(product))
     }
 
@@ -44,7 +53,7 @@ class ProductController {
     @DeleteMapping(value = ["/{id}"])
     fun delete(@PathVariable("id") id: String) = this.productService.delete(id)
 
-    @ApiOperation("API para consulta do produto", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_VALUE, position = 4)
+    @ApiOperation("API para consulta do produto", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_VALUE, position = 5)
     @GetMapping(value = ["/{id}"])
     fun find(@PathVariable("id") id: String) : ResponseEntity<Product> {
         var product : Optional<Product> = this.productService.findById(id);
@@ -55,5 +64,6 @@ class ProductController {
 
         return ResponseEntity.ok(product.get());
     }
+
 
 }

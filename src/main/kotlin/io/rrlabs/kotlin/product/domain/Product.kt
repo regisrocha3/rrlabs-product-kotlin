@@ -10,16 +10,28 @@ import java.util.*
 class Product {
 
     @PrimaryKeyColumn(name = "id", ordering = Ordering.DESCENDING, ordinal = 0, type = PrimaryKeyType.PARTITIONED)
-    var id : UUID? = null;
+    private var id : UUID? = null;
 
     @Column(value = "name")
-    var name: String? = null;
+    private var name: String? = null;
 
     @Column(value = "description")
-    var description: String? = null;
+    private var description: String? = null;
 
     @Column(value = "price")
-    var price: String? = null;
+    private var price: String? = null;
+
+    public fun getId() = this.id
+    public fun setId(id: UUID?) { this.id = id }
+
+    public fun getName() = this.name
+    public fun setName(name: String?) { this.name = name }
+
+    public fun getDescription() = this.description
+    public fun setDescription(description: String?) { this.description = description }
+
+    public fun getPrice() = this.price
+    public fun setPrice(price: String?) { this.price = price }
 
     constructor();
 
